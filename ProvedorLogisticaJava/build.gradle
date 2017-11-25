@@ -1,14 +1,45 @@
 // Apply the java-library plugin to add support for Java Library
 apply plugin: 'java-library'
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'com.bmuschko.tomcat'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
+    mavenLocal()
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
+//https://github.com/bmuschko/gradle-tomcat-plugin#assigning-the-tomcat-libraries
+    def tomcatVersion = '8.5.16'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2",
+           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+ 
+	providedCompile "javax.servlet:javax.servlet-api:3.1.0"
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.42'
+    compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0.1'
+	compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.25'
+	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: '2.25'
+	compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.25'
 }
 
+tomcat {
+	httpPort = 8090
+	httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+	ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+}
+
+buildscript {
+	repositories {
+		jcenter()
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'com.bmuschko:gradle-tomcat-plugin:2.4.2'
+	}
+}
