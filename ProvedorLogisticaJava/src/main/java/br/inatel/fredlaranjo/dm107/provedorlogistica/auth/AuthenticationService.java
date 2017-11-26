@@ -1,6 +1,9 @@
 package br.inatel.fredlaranjo.dm107.provedorlogistica.auth;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Objects;
 
@@ -26,9 +29,12 @@ public class AuthenticationService {
 			final String userAndPassSplit[] = userAndPass.split(":");
 			final String user = userAndPassSplit[0];
 			final String pass = userAndPassSplit[1];
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(pass.getBytes(), 0, pass.length());
+			String encodedPass = new BigInteger(1, md.digest()).toString(16);
 
-			authenticationStatus = userDao.userExists(user, pass);
-		} catch (IOException e) {
+			authenticationStatus = userDao.userExists(user, encodedPass);
+		} catch (IOException | NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
 

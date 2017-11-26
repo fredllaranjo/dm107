@@ -22,7 +22,6 @@ CREATE a delivery
 |_URL:_|http://localhost:8080/ProvedorLogisticaJava/provlog/entrega/|
 |_Method:_| POST|
 |_Consumes(Media-Type):_|application/json|
-|_Produces(Media-Type):_|application/json|
 |_HTTP Status Codes:_|200 OK, 500 Unexpected Server Error, 400 BadRequest (* obrigatory fields not informed)|
 |_Request-Body(Payload):_|  
 {  
@@ -84,5 +83,5 @@ DELETE a delivery
 |_HTTP Status Codes:_|200 OK, 500 Unexpected Server Error|
 
 ---  
-By Frederico A. Laranjo Silva
+By Frederico A. Laranjo Silva  
 MARKDOWN (.md) guide: https://dillinger.io/

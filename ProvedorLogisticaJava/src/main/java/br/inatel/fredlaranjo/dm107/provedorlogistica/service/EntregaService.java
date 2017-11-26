@@ -28,7 +28,6 @@ public class EntregaService {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response createEntrega(EntregaModel entrega) {
 		if (Objects.isNull(entrega.getIdCliente()) || Objects.isNull(entrega.getNumPedido())) {
 			return Response.status(Status.BAD_REQUEST).build();

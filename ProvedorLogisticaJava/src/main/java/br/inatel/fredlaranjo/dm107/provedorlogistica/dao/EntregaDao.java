@@ -9,8 +9,8 @@ import br.inatel.fredlaranjo.dm107.provedorlogistica.model.EntregaModel;
 
 public class EntregaDao {
 
-	private static final String INSERT_ENTREGA = "INSERT INTO entrega(num_pedido, id_cliente, nome_recebedor, cpf_recebedor, data_hora_entrega) VALUES(?, ?, ?, ?, ?);";
-	private static final String SELECT_ENTREGA = "SELECT * FROM entrega WHERE num_pedido = ?;";
+	private static final String INSERT_ENTREGA = "INSERT INTO entregas(num_pedido, id_cliente, nome_recebedor, cpf_recebedor, data_hora_entrega) VALUES(?, ?, ?, ?, ?);";
+	private static final String SELECT_ENTREGA = "SELECT * FROM entregas WHERE num_pedido = ?;";
 
 	public void insertEntrega(EntregaModel entrega) throws SQLException {
 		try (Connection connection = ConnectionFactory.getConnection();
