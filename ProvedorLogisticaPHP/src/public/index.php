@@ -67,7 +67,7 @@ public function isValid($entrega){
     if ($this->isFieldDefined($entrega, "id")
         && $this->isFieldDefined($entrega, "nome_recebedor")
         && $this->isFieldDefined($entrega, "cpf_recebedor")
-        && $this->isFieldDefined($entrega, "data_entrega"))  {
+        && $this->isFieldDefined($entrega, "data_hora_entrega"))  {
         return true;
     }
 
