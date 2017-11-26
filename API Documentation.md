@@ -3,10 +3,10 @@
 Documentation for ProvedorLogistica a logistics provider that handles the deliveries CRUD.
 
 ## DEFAULT USER
-All requests requires Basic authentication (Authorization Header with encoded credential pair)
-| USER | PASSWORD |
-| ------ | ------ |
-| fred | fred |
+All requests requires Basic authentication (Authorization Header with encoded credential pair)  
+| USER | PASSWORD |  
+| ------ | ------ |  
+| fred | fred |  
 
 
 ## API
@@ -16,13 +16,13 @@ All requests requires Basic authentication (Authorization Header with encoded cr
 ### Java
 
 ---  
-CREATE a delivery
-| DEFINITION | VALUE |
-| ------ | ------ |
-|_URL:_|http://localhost:8080/ProvedorLogisticaJava/provlog/entrega/|
-|_Method:_| POST|
-|_Consumes(Media-Type):_|application/json|
-|_HTTP Status Codes:_|200 OK, 500 Unexpected Server Error, 400 BadRequest (* obrigatory fields not informed)|
+CREATE a delivery  
+| DEFINITION | VALUE |  
+| ------ | ------ |  
+|_URL:_|http://localhost:8080/ProvedorLogisticaJava/provlog/entrega/|  
+|_Method:_| POST|  
+|_Consumes(Media-Type):_|application/json|  
+|_HTTP Status Codes:_|200 OK, 500 Unexpected Server Error, 400 BadRequest (* obrigatory fields not informed)|  
 |_Request-Body(Payload):_|  
 {  
 "numPedido" : 20000,_*_  
@@ -33,15 +33,15 @@ CREATE a delivery
 }  
 
 ---  
-RETRIEVE a delivery
-| DEFINITION | VALUE |
-| ------ | ------ | 
-|_URL:_| http://localhost:8080/ProvedorLogisticaJava/provlog/entrega/{numPedido}|
-|_Method:_| GET|
-|_Produces(Media-Type):_|application/json|
-|_PathParams:_| {numPedido} - the order number|
-|_HTTP Status Codes:_|200 OK, 500 Unexpected Server Error|
-|_Response Body:_|
+RETRIEVE a delivery  
+| DEFINITION | VALUE |  
+| ------ | ------ |  
+|_URL:_| http://localhost:8080/ProvedorLogisticaJava/provlog/entrega/{numPedido}|  
+|_Method:_| GET|  
+|_Produces(Media-Type):_|application/json|  
+|_PathParams:_| {numPedido} - the order number|  
+|_HTTP Status Codes:_|200 OK, 500 Unexpected Server Error|  
+|_Response Body:_|  
 {  
 "id" : 1,  
 "numPedido" : 20000,  
@@ -56,14 +56,14 @@ RETRIEVE a delivery
 ### PHP
 
 ---  
-UPDATE a delivery
-| DEFINITION | VALUE |
-| ------ | ------ | 
+UPDATE a delivery  
+| DEFINITION | VALUE |  
+| ------ | ------ |  
 |_URL:_| http://localhost/ProvedorLogisticaPHP/src/public/provlog/entrega/{id} |  
-|_Method:_| PUT|
-|_Consumes(Media-Type):_|application/json|
-|_PathParams:_| {id} - the delivery id|
-|_HTTP Status Codes:_|200 OK, 500 Unexpected Server Error, 400 BadRequest (* obrigatory fields not informed)|
+|_Method:_| PUT|  
+|_Consumes(Media-Type):_|application/json|  
+|_PathParams:_| {id} - the delivery id|  
+|_HTTP Status Codes:_|200 OK, 500 Unexpected Server Error, 400 BadRequest (* obrigatory fields not informed)|  
 |_Request-Body(Payload):_|  
 {  
 "numPedido" : 20000,  
@@ -75,13 +75,13 @@ UPDATE a delivery
 
 ---  
 DELETE a delivery  
-| DEFINITION | VALUE |
-| ------ | ------ | 
+| DEFINITION | VALUE |  
+| ------ | ------ |  
 |_URL:_| http://localhost/ProvedorLogisticaPHP/src/public/provlog/entrega/{id} |  
-|_Method:_| DELETE|
-|_PathParams:_| {id} - the delivery id|
-|_HTTP Status Codes:_|200 OK, 500 Unexpected Server Error|
+|_Method:_| DELETE|  
+|_PathParams:_| {id} - the delivery id|  
+|_HTTP Status Codes:_|200 OK, 500 Unexpected Server Error|  
 
 ---  
 By Frederico A. Laranjo Silva  
-MARKDOWN (.md) guide: https://dillinger.io/
+MARKDOWN (.md) guide: https://dillinger.io/  
