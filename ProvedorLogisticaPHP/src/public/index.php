@@ -45,19 +45,19 @@ $container['db'] = function ($c)
 		    $entrega = $this->db->entregas[$id];
             $body = $request->getParsedBody();
 			    $novaEntrega = array(
-			    "num_pedido"  =>  $body["num_pedido"],
-			    "id_cliente" => $body["id_cliente"],
-			    "nome_recebedor" =>  $body["nome_recebedor"],
-                "cpf_recebedor" =>  $body["cpf_recebedor"],
-                "data_hora_entrega" =>  $body["data_hora_entrega"]
+			    "num_pedido"  =>  $body["numPedido"],
+			    "id_cliente" => $body["idCliente"],
+			    "nome_recebedor" =>  $body["nomeRecebedor"],
+                "cpf_recebedor" =>  $body["cpfRecebedor"],
+                "data_hora_entrega" =>  $body["dataHoraEntrega"]
 		    );
             if ((isset($novaEntrega["nome_recebedor"]) && $novaEntrega["nome_recebedor"] != NULL)
             && (isset($novaEntrega["cpf_recebedor"]) && $novaEntrega["cpf_recebedor"] != NULL)
             && (isset($novaEntrega["data_hora_entrega"]) && $novaEntrega["data_hora_entrega"] != NULL))  {
-                return $response->withStatus(400)->write("Verifique o preenchimento dos campos");
-            } else {
-                $result = $entrega->update($entrega);
+                $result = $entrega->update($novaEntrega);
                 return $result;
+            } else {
+                return $response->withStatus(400)->write("Verifique o preenchimento dos campos");
             }
 
         });
