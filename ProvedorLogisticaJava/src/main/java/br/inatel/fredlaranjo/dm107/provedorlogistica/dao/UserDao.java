@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class UserDao {
 
-	private static final String SELECT_USER = "SELECT COUNT(id) FROM user " + "WHERE user = ? AND pwd = ?;";
+	private static final String SELECT_USER = "SELECT COUNT(id) FROM users " + "WHERE username = ? AND password = ?;";
 
 	public boolean userExists(String user, String pwd) {
 		boolean userExists = false;

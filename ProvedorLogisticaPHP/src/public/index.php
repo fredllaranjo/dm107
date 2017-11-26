@@ -4,79 +4,68 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require '../vendor/autoload.php';
-require 'dao/connection.php';
-require 'dao/entregadao.php';
-require 'dao/userdao.php';
 
-$app = new \Slim\App;
+$config['displayErrorDetails'] = true; 
+$config['addContentLengthHeader'] = false;
+$config['db']['host'] = "localhost"; 
+$config['db']['user'] = "root"; 
+$config['db']['pass'] = "root"; 
+$config['db']['dbname'] = "provlog";
 
-$user = isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : NULL;
-$pwd = isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : NULL;
+$app = new \Slim\App(["config" => $config]);
+
+$app->add(new Slim\Middleware\HttpBasicAuthentication([
+    "path" => ["/api/"],
+    "realm" => "Protected",
+    "authenticator" => new Slim\Middleware\HttpBasicAuthentication\PdoAuthenticator([
+        "pdo" => new PDO("mysql:host=" . $config['db']['host'] . ";dbname=" . $config['db']['dbname'], $config['db']['user'], $config['db']['pass']),
+        "table" => "users",
+        "user" => "username",
+        "hash" => "password"
+            ])
+]));
 
 
-$userDao = new UserDao();
-    
-if ($userDao->userExists($user, $pwd)) {
-    $app->add(new Tuupola\Middleware\HttpBasicAuthentication([
-        "user" => [$user => $pwd]
-		]));
-    $app->put('/provlog/entrega', function(Request $request, Response $response) {
-            $entregaDao = new EntregaDao();
-            $entrega = $request->getParsedBody();
+$container = $app->getContainer();
 
-            if (!isValid($entrega)) {
+$container['db'] = function ($c) 
+{ 
+        $dbConfig = $c['config']['db']; 
+        $pdo = new PDO("mysql:host=" . $dbConfig['host'] . ";dbname=" . $dbConfig['dbname'], $dbConfig['user'], $dbConfig['pass']); 
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); 
+        $db = new NotORM($pdo); 
+        return $db; 
+};
+
+    $app->put('/provlog/entrega/{id}', function(Request $request, Response $response) {
+            
+            $id = $request->getAttribute("id");
+
+		    $entrega = $this->db->entregas[$id];
+            $body = $request->getParsedBody();
+			    $novaEntrega = array(
+			    "num_pedido"  =>  $body["num_pedido"],
+			    "id_cliente" => $body["id_cliente"],
+			    "nome_recebedor" =>  $body["nome_recebedor"],
+                "cpf_recebedor" =>  $body["cpf_recebedor"],
+                "data_hora_entrega" =>  $body["data_hora_entrega"]
+		    );
+            if ((isset($novaEntrega["nome_recebedor"]) && $novaEntrega["nome_recebedor"] != NULL)
+            && (isset($novaEntrega["cpf_recebedor"]) && $novaEntrega["cpf_recebedor"] != NULL)
+            && (isset($novaEntrega["data_hora_entrega"]) && $novaEntrega["data_hora_entrega"] != NULL))  {
                 return $response->withStatus(400)->write("Verifique o preenchimento dos campos");
             } else {
-                $result = $entregaDao->update($entrega);
-
-                if ($result) {
-                    return $response->withStatus(200);
-                }
-
-                return $response;
+                $result = $entrega->update($entrega);
+                return $result;
             }
 
         });
 
         $app->delete('/provlog/entrega/{id}', function(Request $request, Response $response) {
-            $entregaDao = new EntregaDao();
-            $entregaId = $request->getAttribute('id');
-
-            $result = $entregaDao->delete($entregaId);
-
-            if ($resullt) {
-                return $response->withStatus(200);
-            }
-
-            return $response;
+            $id = $request->getAttribute('id');
+		    $entrega = $this->db->entregas[$id];
+            $entrega->delete();
         });
-	} else {
-        $app->add(new Tuupola\Middleware\HttpBasicAuthentication([
-            "user" => $userDao->getUsers(),
-            "error" => function ($request, $response, $arguments) {
-                $data = [];
-                $data["status"] = "error";
-                $data["message"] = $arguments["message"];
-
-                return $response->write(json_encode($data, JSON_UNESCAPED_SLASHES), 401);
-            }
-		]));
-    }
-
-public function isValid($entrega){
-    if ($this->isFieldDefined($entrega, "id")
-        && $this->isFieldDefined($entrega, "nome_recebedor")
-        && $this->isFieldDefined($entrega, "cpf_recebedor")
-        && $this->isFieldDefined($entrega, "data_hora_entrega"))  {
-        return true;
-    }
-
-    return false;
-}
-
-private function isFieldDefined($entrega, $field) {
-    return (isset($entrega[$field]) && $entrega[$field] != NULL);
-}
-
 $app->run();
 ?>

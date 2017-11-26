@@ -1,8 +1,8 @@
 {
     "require": {
-        "slim/slim": "^3.9",
-        "vrana/notorm": "dev-master",
+        "tuupola/slim-basic-auth": "^2.3",
         "slim/middleware": "^1.0",
-        "tuupola/slim-basic-auth": "^2.3"
+        "slim/slim": "^3.9",
+        "vrana/notorm": "dev-master"
     }
 }

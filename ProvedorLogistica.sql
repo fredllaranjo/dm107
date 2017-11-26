@@ -1,16 +1,15 @@
 create database provlog;
 
 use provlog;
-CREATE TABLE user (
+CREATE TABLE users (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    user varchar(255),
-    pwd varchar(255)
+    username varchar(255),
+    password varchar(255)
 );
-
-insert into user 
-(user, pwd) 
+insert into users
+(username, password) 
 values 
-("fred","fred");
+("fred","570a90bfbf8c7eab5dc5d4e26832d5b1");/*fred*/
 
 CREATE TABLE entregas (
 id int AUTO_INCREMENT PRIMARY KEY NOT NULL,

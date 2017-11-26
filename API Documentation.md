@@ -16,23 +16,23 @@ All requests requires Basic authentication (Authorization Header with encoded cr
 CREATE a delivery
 | DEFINITION | VALUE |
 | ------ | ------ |
-|_URL:_|/provlog/entrega/|
+|_URL:_|http://localhost:8080/ProvedorLogisticaJava/provlog/entrega/|
 |_Method:_| POST|
 |_Consumes(Media-Type):_|application/json|
 |_Produces(Media-Type):_|application/json|
-|_Request-Body(Payload):_|
-{
-    "numPedido" : "12345"; _*_
-    "idCliente" : "966"; _*_
-    "nomeRecebedor" : null;
-    "cpfRecebedor" : null;
-    "dataHoraEntrega" : null;
-}
+|_Request-Body(Payload):_|  
+{  
+    "numPedido" : "12345"; _*_  
+    "idCliente" : "966"; _*_  
+    "nomeRecebedor" : null;  
+    "cpfRecebedor" : null;  
+    "dataHoraEntrega" : null;  
+}  
 
 RETRIEVE a delivery
 | DEFINITION | VALUE |
 | ------ | ------ | 
-|_URL:_|/provlog/entrega/{numPedido}|
+|_URL:_| http://localhost:8080/ProvedorLogisticaJava/provlog/entrega/{numPedido}|
 |_Method:_| GET|
 |_Produces(Media-Type):_|application/json|
 |_PathParams:_| {numPedido} - the order number|
@@ -42,7 +42,7 @@ RETRIEVE a delivery
 UPDATE a delivery
 
 DELETE a delivery
-
+http://localhost/ProvedorLogisticaPHP/src/public/provlog/entrega/{id}
 
 
 MARKDOWN (.md) guide: https://dillinger.io/

@@ -14,7 +14,9 @@ import br.inatel.fredlaranjo.dm107.provedorlogistica.config.Constants;
  */
 public final class ConnectionFactory {
 	private ConnectionFactory() {}//prevent instantiation
+
 	public static Connection getConnection() throws SQLException {
+		DriverManager.registerDriver(new com.mysql.jdbc.Driver()); 
 		return DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PASS);
 	}
 }
